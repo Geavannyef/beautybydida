@@ -94,7 +94,7 @@
                                     ?>
                                 </tbody>
                             </table>
-                             <button style="width:150px">Add Beauty Hacks<a href="http://localhost/codeigniterDida/index.php/ContBeauty/tambahBeautyhacks" class=" btn btn-warning fa fa-edit" title="Add"></a></button>
+                             <button style="width:150px">Add Beauty Hacks<a href="<?php echo base_url(). 'index.php/ContBeauty/tambahBeautyhacks';?>" class=" btn btn-warning fa fa-edit" title="Add"></a></button>
                     </div>
                 </div>
                 <!-- /.row -->

@@ -70,14 +70,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		{*/
 			$table = "bookmakeup";
 			$data['data'] = $this->ModelBook->gettable($table);
+			if($this->session->userdata('aksesadmin')) {
 			$this->load->view('bookmakeup', $data);
+    	}else{
+    		$this->load->view('indexLogin');
     	}
+
+    }
+
    public function hapusBook($id)
     {
     	$this->ModelBook->hapusBook($id);
+    	if($this->session->userdata('aksesadmin')) {
     	redirect('ContBook/listBook');
+    }else{
+    	$this->load->view('indexLogin');
     }
     
 	}
+}
 
 	

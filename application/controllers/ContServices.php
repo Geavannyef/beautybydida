@@ -22,6 +22,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	}
 	public function editServices($id)
 	{
+		$this->form_validation->set_rules('judul','judul', 'required');
 		$this->form_validation->set_rules('caption','caption', 'required');
 		if($this->form_validation->run() === FALSE)
 		{
@@ -35,6 +36,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						'JUDUL' => $this->input->post('judul'),
 						'CAPTION' => $this->input->post('caption'),
 						'HARGA' => $this->input->post('harga'));
+				$query = $this->db->where('id_services', $id);
+				$query = $this->db->update('services', $data);
+				redirect('ContServices/listServices');
 				$target_Path = NULL;
 				if ($_FILES['path']['name'] != NULL)
 				{
@@ -74,26 +78,41 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		}
 	public function listServices()
 	{
-		/*if($this->session->userdata('akses'))
-		{*/
+		if($this->session->userdata('aksesadmin'))
+		{
 			$table = "services";
 			$data['data'] = $this->ModelServices->gettable($table);
+			
 			$this->load->view('services', $data);
+		}else{
+			$this->load->view('indexLogin');
+		}
+		
     	}
     public function hapusServices($judul) {
+    	if($this->session->userdata('aksesadmin'))
+    	{
     	$where = array('judul' => $judul);
     	$res = $this->ModelServices->hapusServices('services',$where);
+    	
     	if($res>=1){
     		redirect('ContServices/index');
     	}else{
     		echo "gagal";
+    		$this->load->view('indexLogin');
+    		
+		}
     	}
     }
 
     public function tambahServices() {
+    	if($this->session->userdata('aksesadmin'))
+    	{
     	$this->load->view('addservices');
+    }else{
+    	$this->load->view('indexLogin');
     }
-   
+   }
     public function do_add()
 	{ 	
 

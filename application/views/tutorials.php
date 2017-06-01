@@ -99,7 +99,7 @@
                                     ?>
                                 </tbody>
                             </table>
-                            <button style="width:100px">Add Tutorials<a href="http://localhost/codeigniterDida/index.php/ContTutorials/tambahTutorials" class=" btn btn-warning fa fa-edit" title="Add"></a></button>
+                            <button style="width:100px">Add Tutorials<a href="<?php echo base_url(). 'index.php/ContTutorials/tambahTutorials';?>" class=" btn btn-warning fa fa-edit" title="Add"></a></button>
                            
                     </div>
 								</div>

@@ -24,6 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	public function editBeauty($id)
 	{
 		$this->form_validation->set_rules('judul','judul', 'required');
+		$this->form_validation->set_rules('details','details', 'required');
 		if($this->form_validation->run() === FALSE)
 		{
 			$data['data'] = $this->ModelBeauty->get_data_id($id);
@@ -37,6 +38,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						'DETAILS' => $this->input->post('details')
 
 						);
+				$query = $this->db->where('id_beauty', $id);
+				$query = $this->db->update('beautyhacks', $data);
+				redirect('ContBeauty/listBeauty');
 				$target_Path = NULL;
 				if ($_FILES['path']['name'] != NULL)
 				{
@@ -46,14 +50,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					$target_Path = $target_Path.$string;
 				}
 				if($target_Path!=NULL)
-			{
+				{
 				$data = array(
-					'JUDUL' => $this->input->post('judul'),
-					'DETAILS' => $this->input->post('details'),
+					
 					'path' => $target_Path
 				);
 				$query = $this->db->where('id_beauty', $id);
 				$query = $this->db->update('beautyhacks', $data);
+				redirect('ContBeauty/listBeauty');
 				if($query)
 				{
 					if ($target_Path != NULL) {
@@ -63,7 +67,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					echo 'alert("File berhasil ditambahkan");';
 					echo 'window.history.go(-1);';
 					echo '</script>';
-					redirect('ContBeauty/index');
+					
 				}
 				else
 				{
@@ -72,7 +76,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					echo 'window.history.go(-1);';
 					echo '</script>';
 				}
-				$res = $this->db->insert('beautyhacks',$data_insert);
+				redirect('ContBeauty/listBeauty');
+				
 				
 }
 }
@@ -83,10 +88,20 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		{*/
 			$table = "beautyhacks";
 			$data['data'] = $this->ModelBeauty->gettable($table);
+			if($this->session->userdata('aksesadmin'))
+		{
 			$this->load->view('beauty', $data);
+		}else{
+			$this->load->view('indexLogin');
+		}
     	}
     public function tambahBeautyhacks() {
-    	$this->load->view('addbeauty');
+    	if($this->session->userdata('aksesadmin'))
+		{
+			$this->load->view('addbeauty');
+		}else{
+			$this->load->view('indexLogin');
+		}
     }
    
     public function do_add()
@@ -151,7 +166,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	}*/
 	public function hapusBeauty($id) {
     	$this->ModelBeauty->hapusBeauty($id);
+    	if($this->session->userdata('aksesadmin'))
+		{
     	redirect('ContBeauty/listBeauty');
+    }else{
+    	$this->load->view('indexLogin');
+    }
     }
 	}
 

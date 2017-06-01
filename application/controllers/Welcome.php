@@ -42,13 +42,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	}
 	public function indexAdmin()
 	{
-		$this->load->view('indexAdmin');
+		if($this->session->userdata('aksesadmin'))
+		{
+		$this->load->view('indexLogin');
+	}else{
+		$this->load->view('indexLogin');
+	}
 	}
 	
-	public function tables()
-	{
-		$this->load->view('tables');
-	}
+	
 	
 	
 }

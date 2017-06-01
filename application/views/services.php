@@ -101,7 +101,7 @@
                                     ?>
                                 </tbody>
                             </table>
-                            <button style="width:100px">Add Services<a href="http://localhost/codeigniterDida/index.php/ContServices/tambahServices" class=" btn btn-warning fa fa-edit" title="Add"></a></button>
+                            <button style="width:100px">Add Services<a href="<?php echo base_url(). 'index.php/ContServices/tambahServices';?>" class=" btn btn-warning fa fa-edit" title="Add"></a></button>
                     </div>
 								</div>
 								

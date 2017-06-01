@@ -34,6 +34,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			//$this->model_artikel->edit_data($id);
 				$data = array(
 						'SECTION' => $this->input->post('section'));
+				$query = $this->db->where('id_about', $id);
+				$query = $this->db->update('about', $data);
+				redirect('ContAbout/listAbout');
 				$target_Path = NULL;
 				if ($_FILES['path']['name'] != NULL)
 				{
@@ -77,7 +80,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		{*/
 			$table = "about";
 			$data['data'] = $this->ModelAbout->gettable($table);
+			if($this->session->userdata('aksesadmin'))
+		{
 			$this->load->view('about', $data);
+		}else{
+			$this->load->view('indexLogin');
+		}
     	}
 
     

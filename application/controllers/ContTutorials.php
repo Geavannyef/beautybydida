@@ -42,12 +42,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 	public function listTutorials()
 	{
-		/*if($this->session->userdata('akses'))
-		{*/
+		if($this->session->userdata('aksesadmin'))
+		{
 			$table = "tutorials";
 			$data['data'] = $this->ModelTutorials->gettable($table);
 			$this->load->view('tutorials', $data);
+    	}else{
+    		$this->load->view('indexLogin');
     	}
+    }
     /*public function hapusTutorials($path)
     {
     	$where = array('path' => $path);
@@ -61,15 +64,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     public function hapusTutorials($id)
     {
     	$this->ModelTutorials->hapusTutorials($id);
+    	if($this->session->userdata('aksesadmin'))
+		{
     	redirect('ContTutorials/listTutorials');
+    }else{
+    	$this->load->view('indexLogin');
+    }
     }
     public function tambahTutorials()
     {
+    	if($this->session->userdata('aksesadmin'))
+		{
     	$this->load->view('addtutorials');
+    }else{
+    	$this->load->view('indexLogin');
+    }
 	}
 	public function do_add()
 	{
-
+		if($this->session->userdata('aksesadmin'))
+		{
 		$path = $_POST['path'];
 		$data_insert = array(
 			'path' => $path
@@ -79,9 +93,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				redirect('ContTutorials/index');
 			}else{
 				echo "gagal";
+				$this->load->view('indexLogin');
 			}
 	}
-	
+	}
 }
 	
 
